@@ -1,0 +1,12 @@
+{
+  "parent": "utr:block/cube_with_particles",
+  "textures": {
+    "down":  "utr:blocks/analyzer/analyzer_bottom",
+    "up":    "utr:blocks/analyzer/analyzer_top",
+    "north": "utr:blocks/analyzer/analyzer",
+    "south": "utr:blocks/analyzer/analyzer_side",
+    "west":  "utr:blocks/analyzer/analyzer_side",
+    "east":  "utr:blocks/analyzer/analyzer_side",
+    "particle": "utr:blocks/analyzer/analyzer_bottom"
+  }
+}

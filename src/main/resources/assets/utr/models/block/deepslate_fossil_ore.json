@@ -1,0 +1,6 @@
+{
+  "parent": "block/cube_all",
+  "textures": {
+    "all": "utr:blocks/deepslate_fossil_ore"
+  }
+}

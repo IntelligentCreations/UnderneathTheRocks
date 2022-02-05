@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "WW",
+    "WW",
+    "WW"
+  ],
+  "key": {
+    "W": {
+      "item": "minecraft:paper"
+    }
+  },
+  "result": {
+    "item": "utr:blank_sheet",
+    "count": 2
+  }
+}

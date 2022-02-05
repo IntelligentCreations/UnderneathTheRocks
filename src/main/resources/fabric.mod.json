@@ -1,0 +1,35 @@
+{
+  "schemaVersion": 1,
+  "id": "utr",
+  "version": "${version}",
+
+  "name": "Underneath The Rocks",
+  "description": "There are too many stories buried underneath the rocks.",
+  "authors": [
+    "pkstDev"
+  ],
+  "contact": {
+    "homepage": "https://fabricmc.net/",
+    "sources": "https://github.com/FabricMC/fabric-example-mod"
+  },
+
+  "license": "CC0-1.0",
+  "icon": "assets/utr/icon.png",
+
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "dev.intelligentcreations.utr.UnderneathTheRocks"
+    ],
+    "client": [
+      "dev.intelligentcreations.utr.UnderneathTheRocksClient"
+    ]
+  },
+
+  "depends": {
+    "fabricloader": ">=0.12.12",
+    "fabric": "*",
+    "minecraft": "1.18.x",
+    "java": ">=17"
+  }
+}

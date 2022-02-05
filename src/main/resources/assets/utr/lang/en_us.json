@@ -1,0 +1,10 @@
+{
+  "itemGroup.utr.main": "Underneath The Rocks",
+
+  "item.utr.fossil": "Ancient Fossil",
+  "item.utr.blank_sheet": "Blank Sheet",
+
+  "block.utr.fossil_ore": "Fossil Ore",
+  "block.utr.deepslate_fossil_ore": "Deepslate Fossil Ore",
+  "block.utr.analyzer": "Analyzer"
+}
