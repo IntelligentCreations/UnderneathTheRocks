@@ -3,6 +3,8 @@
 
   "item.utr.fossil": "Ancient Fossil",
   "item.utr.blank_sheet": "Blank Sheet",
+  "item.utr.analyzed_fossil": "Analyzed Fossil",
+  "item.utr.analyzing_report": "Analyzing Report",
 
   "block.utr.fossil_ore": "Fossil Ore",
   "block.utr.deepslate_fossil_ore": "Deepslate Fossil Ore",
