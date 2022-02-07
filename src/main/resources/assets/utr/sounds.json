@@ -1,0 +1,8 @@
+{
+  "my_sound": {
+    "subtitle": "subtitles.utr.analyzing",
+    "sounds": [
+      "utr:analyzer"
+    ]
+  }
+}

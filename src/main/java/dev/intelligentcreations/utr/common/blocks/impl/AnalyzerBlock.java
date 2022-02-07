@@ -1,6 +1,7 @@
 package dev.intelligentcreations.utr.common.blocks.impl;
 
 import dev.intelligentcreations.utr.common.blockentities.impl.AnalyzerBlockEntity;
+import dev.intelligentcreations.utr.common.registries.SoundRegistry;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockRenderType;
 import net.minecraft.block.BlockState;
@@ -10,7 +11,10 @@ import net.minecraft.block.entity.BlockEntityTicker;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemPlacementContext;
+import net.minecraft.particle.ParticleTypes;
 import net.minecraft.screen.NamedScreenHandlerFactory;
+import net.minecraft.sound.SoundCategory;
+import net.minecraft.sound.SoundEvents;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.BooleanProperty;
 import net.minecraft.state.property.Properties;
@@ -21,6 +25,8 @@ import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.world.World;
+
+import java.util.Random;
 
 import static dev.intelligentcreations.utr.common.blockentities.init.UTRBlockEntityInit.ANALYZER_BLOCK_ENTITY;
 
@@ -79,5 +85,16 @@ public class AnalyzerBlock extends BlockWithEntity {
     @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(World world, BlockState state, BlockEntityType<T> type) {
         return checkType(type, ANALYZER_BLOCK_ENTITY, AnalyzerBlockEntity::tick);
+    }
+
+    public void randomDisplayTick(BlockState state, World world, BlockPos pos, Random random) {
+        if (state.get(WORKING)) {
+            double d = (double)pos.getX() + 0.5D;
+            double e = pos.getY();
+            double f = (double)pos.getZ() + 0.5D;
+            if (random.nextDouble() < 0.1D) {
+                world.playSound(d, e, f, SoundRegistry.ANALYZING_SOUND_EVENT, SoundCategory.BLOCKS, 1.0F, 1.0F, false);
+            }
+        }
     }
 }

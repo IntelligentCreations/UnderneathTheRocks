@@ -1,5 +1,7 @@
 package dev.intelligentcreations.utr.common.blockentities.impl;
 
+import com.redgrapefruit.itemnbt3.DataClient;
+import dev.intelligentcreations.utr.common.data.impl.AnalyzedFossilData;
 import dev.intelligentcreations.utr.common.screenhandlers.impl.AnalyzerScreenHandler;
 import dev.intelligentcreations.utr.common.utils.impl.ImplementedInventory;
 import net.minecraft.block.BlockState;
@@ -18,7 +20,6 @@ import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-import java.util.Iterator;
 import java.util.Random;
 
 import static dev.intelligentcreations.utr.common.blockentities.init.UTRBlockEntityInit.ANALYZER_BLOCK_ENTITY;
@@ -27,15 +28,33 @@ import static dev.intelligentcreations.utr.common.items.init.UTRItemInit.*;
 
 public class AnalyzerBlockEntity extends BlockEntity implements NamedScreenHandlerFactory, ImplementedInventory {
     private final DefaultedList<ItemStack> inventory = DefaultedList.ofSize(4, ItemStack.EMPTY);
-    private static Random random;
+    private static Random random = new Random();
     private int analyzingTime;
     private int maxAnalyzingTime;
 
     public AnalyzerBlockEntity(BlockPos pos, BlockState state) {
         super(ANALYZER_BLOCK_ENTITY, pos, state);
         this.analyzingTime = 0;
-        this.maxAnalyzingTime = 2000;
+        this.maxAnalyzingTime = 2400;
     }
+
+    private final PropertyDelegate propertyDelegate = new PropertyDelegate() {
+        @Override
+        public int get(int index) {
+            return analyzingTime;
+        }
+
+        @Override
+        public void set(int index, int value) {
+            analyzingTime = value;
+        }
+
+        //this is supposed to return the amount of integers you have in your delegate, in our example only one
+        @Override
+        public int size() {
+            return 1;
+        }
+    };
 
     @Override
     public DefaultedList<ItemStack> getItems() {
@@ -45,7 +64,7 @@ public class AnalyzerBlockEntity extends BlockEntity implements NamedScreenHandl
 
     @Override
     public ScreenHandler createMenu(int syncId, PlayerInventory playerInventory, PlayerEntity player) {
-        return new AnalyzerScreenHandler(syncId, playerInventory, this);
+        return new AnalyzerScreenHandler(syncId, playerInventory, this, this.propertyDelegate);
     }
 
     @Override
@@ -74,38 +93,58 @@ public class AnalyzerBlockEntity extends BlockEntity implements NamedScreenHandl
     }
 
     private void tickAnalyzer(World world, BlockPos pos, BlockState state) {
-        AnalyzerBlockEntity be = this;
-        ItemStack input1 = be.getStack(0);
-        ItemStack input2 = be.getStack(1);
-        ItemStack output1 = be.getStack(2);
-        ItemStack output2 = be.getStack(3);
+        ItemStack input1 = this.getStack(0);
+        ItemStack input2 = this.getStack(1);
+        ItemStack output1 = this.getStack(2);
+        ItemStack output2 = this.getStack(3);
 
-        if (output1.getCount() >= 1 || output2.getCount() >= 1) {
-            world.setBlockState(pos, state.with(WORKING, false));
+        if (world == null) {
             return;
         }
 
-        if (input1.isEmpty() || input2.isEmpty()) {
-            world.setBlockState(pos, state.with(WORKING, false));
-            if (be.analyzingTime != 0) {
-                be.analyzingTime = 0;
-                be.markDirty();
+        if (!world.isClient) {
+            if (output1.getCount() >= 1 || output2.getCount() >= 1) {
+                world.setBlockState(pos, state.with(WORKING, false));
+                if (this.analyzingTime != 0) {
+                    this.analyzingTime = 0;
+                    this.markDirty();
+                }
+                return;
             }
-        } else {
-            world.setBlockState(pos, state.with(WORKING, true));
-            be.analyzingTime++;
-            be.markDirty();
-        }
 
-        if (be.analyzingTime >= be.maxAnalyzingTime) {
-            input1.decrement(1);
-            input2.decrement(1);
-            if (output1.isEmpty() && output2.isEmpty()) {
-                be.setStack(2, new ItemStack(ANALYZED_FOSSIL, 1));
-                be.setStack(3, new ItemStack(ANALYZING_REPORT, 1));
+            if (input1.isEmpty() || input2.isEmpty()) {
+                world.setBlockState(pos, state.with(WORKING, false));
+                if (this.analyzingTime != 0) {
+                    this.analyzingTime = 0;
+                    this.markDirty();
+                }
+            } else {
+                world.setBlockState(pos, state.with(WORKING, true));
+                ++this.analyzingTime;
+                this.markDirty();
             }
-            be.analyzingTime = 0;
-            be.markDirty();
+
+            if (this.analyzingTime >= this.maxAnalyzingTime) {
+                if (output1.isEmpty() && output2.isEmpty()) {
+                    int fossilType = random.nextInt(8);
+                    this.setStack(2, new ItemStack(ANALYZED_FOSSIL, 1));
+                    this.setStack(3, new ItemStack(ANALYZING_REPORT, 1));
+                    DataClient.use(AnalyzedFossilData::new, this.getStack(2), (data) -> {
+                        data.setType(fossilType);
+                    });
+                    DataClient.use(AnalyzedFossilData::new, this.getStack(3), (data) -> {
+                        data.setType(fossilType);
+                    });
+                } else {
+                    this.analyzingTime = 0;
+                    this.markDirty();
+                    return;
+                }
+                input1.decrement(1);
+                input2.decrement(1);
+                this.analyzingTime = 0;
+                this.markDirty();
+            }
         }
     }
 

@@ -16,6 +16,7 @@ public class UnderneathTheRocks implements ModInitializer {
 		BlockEntityRegistry.register();
 		OreGenRegistry.register();
 		ScreenHandlersRegistry.register();
+		SoundRegistry.register();
 		LOGGER.info("Initialized.");
 	}
 }

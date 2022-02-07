@@ -17,16 +17,19 @@ import static dev.intelligentcreations.utr.common.screenhandlers.init.UTRScreenH
 
 public class AnalyzerScreenHandler extends ScreenHandler {
     private final Inventory inventory;
+    PropertyDelegate propertyDelegate;
 
     public AnalyzerScreenHandler(int syncId, PlayerInventory playerInventory) {
-        this(syncId, playerInventory, new SimpleInventory(4));
+        this(syncId, playerInventory, new SimpleInventory(4), new ArrayPropertyDelegate(1));
     }
 
-    public AnalyzerScreenHandler(int syncId, PlayerInventory playerInventory, Inventory inventory) {
+    public AnalyzerScreenHandler(int syncId, PlayerInventory playerInventory, Inventory inventory, PropertyDelegate propertyDelegate) {
         super(ANALYZER_SCREEN_HANDLER, syncId);
         checkSize(inventory, 4);
         this.inventory = inventory;
+        this.propertyDelegate = propertyDelegate;
         inventory.onOpen(playerInventory.player);
+        this.addProperties(propertyDelegate);
 
         int m;
         int l;
@@ -46,6 +49,9 @@ public class AnalyzerScreenHandler extends ScreenHandler {
             this.addSlot(new Slot(playerInventory, m, 8 + m * 18, 142));
         }
 
+    }
+    public int getProgress(){
+        return propertyDelegate.get(0);
     }
 
     @Override

@@ -8,5 +8,10 @@
 
   "block.utr.fossil_ore": "Fossil Ore",
   "block.utr.deepslate_fossil_ore": "Deepslate Fossil Ore",
-  "block.utr.analyzer": "Analyzer"
+  "block.utr.analyzer": "Analyzer",
+
+  "tooltip.utr.analyzed_fossil": "Analyzed and bounded to the report",
+  "tooltip.utr.analyzing_report": "Bounded to the fossil",
+
+  "subtitles.utr.analyzing": "Analyzing"
 }
