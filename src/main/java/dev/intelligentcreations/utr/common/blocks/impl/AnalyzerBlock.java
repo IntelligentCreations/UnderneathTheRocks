@@ -11,10 +11,8 @@ import net.minecraft.block.entity.BlockEntityTicker;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemPlacementContext;
-import net.minecraft.particle.ParticleTypes;
 import net.minecraft.screen.NamedScreenHandlerFactory;
 import net.minecraft.sound.SoundCategory;
-import net.minecraft.sound.SoundEvents;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.BooleanProperty;
 import net.minecraft.state.property.Properties;
@@ -90,7 +88,7 @@ public class AnalyzerBlock extends BlockWithEntity {
     public void randomDisplayTick(BlockState state, World world, BlockPos pos, Random random) {
         if (state.get(WORKING)) {
             double d = (double)pos.getX() + 0.5D;
-            double e = pos.getY();
+            double e = (double)pos.getY();
             double f = (double)pos.getZ() + 0.5D;
             if (random.nextDouble() < 0.1D) {
                 world.playSound(d, e, f, SoundRegistry.ANALYZING_SOUND_EVENT, SoundCategory.BLOCKS, 1.0F, 1.0F, false);

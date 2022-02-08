@@ -10,8 +10,16 @@
   "block.utr.deepslate_fossil_ore": "Deepslate Fossil Ore",
   "block.utr.analyzer": "Analyzer",
 
-  "tooltip.utr.analyzed_fossil": "Analyzed and bounded to the report",
-  "tooltip.utr.analyzing_report": "Bounded to the fossil",
+  "tooltip.utr.analyzed_fossil": "Used to rebuild creature DNA",
+  "tooltip.utr.analyzing_report": "Used to rebuild creature DNA and do further things",
+  "tooltip.utr.fossil_type.0": "0",
+  "tooltip.utr.fossil_type.1": "1",
+  "tooltip.utr.fossil_type.2": "2",
+  "tooltip.utr.fossil_type.3": "3",
+  "tooltip.utr.fossil_type.4": "4",
+  "tooltip.utr.fossil_type.5": "5",
+  "tooltip.utr.fossil_type.6": "6",
+  "tooltip.utr.fossil_type.7": "7",
 
   "subtitles.utr.analyzing": "Analyzing"
 }

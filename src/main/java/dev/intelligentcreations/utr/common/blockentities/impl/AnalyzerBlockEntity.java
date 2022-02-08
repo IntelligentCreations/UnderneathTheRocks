@@ -28,7 +28,7 @@ import static dev.intelligentcreations.utr.common.items.init.UTRItemInit.*;
 
 public class AnalyzerBlockEntity extends BlockEntity implements NamedScreenHandlerFactory, ImplementedInventory {
     private final DefaultedList<ItemStack> inventory = DefaultedList.ofSize(4, ItemStack.EMPTY);
-    private static Random random = new Random();
+    private static final Random random = new Random();
     private int analyzingTime;
     private int maxAnalyzingTime;
 
@@ -49,7 +49,6 @@ public class AnalyzerBlockEntity extends BlockEntity implements NamedScreenHandl
             analyzingTime = value;
         }
 
-        //this is supposed to return the amount of integers you have in your delegate, in our example only one
         @Override
         public int size() {
             return 1;
